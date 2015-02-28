@@ -71,7 +71,7 @@ const int kDRAG_POINT_LEN = 5;
     NSPoint mouseLocation = [NSEvent mouseLocation];
     NSRect frame = self.window.frame;
     if (mouseLocation.x > frame.origin.x + frame.size.width - 100) {
-        mouseLocation.x -= 60;
+        mouseLocation.x -= 100;
     }
     if (mouseLocation.y > frame.origin.y + frame.size.height - 26) {
         mouseLocation.y -= 26;
