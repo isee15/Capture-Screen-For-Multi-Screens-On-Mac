@@ -1,11 +1,11 @@
 # Capture Screen For Multi Screens On Mac
-There are many implements about capture screen for mac.
+There are many implementation about capture screen for mac.
 <br>
 A sample is in xcode sample code.
 <br>
 And mogutt also show code in https://github.com/mogutt/TTMacClient.
 <br>
-But on dual monitors mode, they are all not work 
+But on dual monitors mode, they are all not work,
 <br>
 even weixin's mac client and http://snip.qq.com/.
 <br>
