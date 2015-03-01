@@ -59,6 +59,7 @@ const int kDRAG_POINT_LEN = 5;
     double y = imageRect.origin.y - 28;
     double x = imageRect.origin.x + imageRect.size.width;
     if (y < 0) y = 0;
+    if (x < 30*5) x = 30*5;
     [self.toolContainer setFrame:NSMakeRect(x - 30 * 5, y, 30 * 5, 26)];
     [self.toolContainer setHidden:NO];
 }

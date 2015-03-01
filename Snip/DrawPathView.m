@@ -56,7 +56,6 @@
 
 - (void)drawShape:(DrawPathInfo *)info inBackground:(BOOL)bIn {
     NSRect rect = NSMakeRect(info.startPoint.x, info.startPoint.y, info.endPoint.x - info.startPoint.x, info.endPoint.y - info.startPoint.y);
-    if (rect.size.width * rect.size.width < 1e-2) return;
     if (bIn) {
         rect = [self.window convertRectFromScreen:rect];
     }
@@ -70,11 +69,13 @@
     switch (info.drawType) {
         case DRAW_TYPE_RECT:
             rect = [SnipUtil uniformRect:rect];
+            if (rect.size.width * rect.size.width < 1e-2) return;
             [rectPath appendBezierPathWithRect:rect];
             [rectPath stroke];
             break;
         case DRAW_TYPE_ELLIPSE:
             rect = [SnipUtil uniformRect:rect];
+            if (rect.size.width * rect.size.width < 1e-2) return;
             [rectPath appendBezierPathWithOvalInRect:rect];
             [rectPath stroke];
             break;
@@ -87,6 +88,7 @@
 
             [rectPath moveToPoint:CGPointZero];
             CGFloat ex1 = sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+            if (abs(rect.size.width) < 5 && abs(rect.size.height) < 5 ) return;
             [rectPath lineToPoint:NSMakePoint(ex1, 0)];
             [rectPath lineToPoint:NSMakePoint(ex1 - 8, 5)];
             [rectPath lineToPoint:NSMakePoint(ex1 - 2, 0)];
