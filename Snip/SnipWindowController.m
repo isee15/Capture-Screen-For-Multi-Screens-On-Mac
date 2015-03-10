@@ -75,6 +75,7 @@ const int kAdjustKnown = 8;
         int layer = 0;
         CFNumberRef numberRef = (__bridge CFNumberRef) dir[(id) kCGWindowLayer];
         CFNumberGetValue(numberRef, kCFNumberSInt32Type, &layer);
+        if (layer < 0) continue;
         if ([SnipUtil isPoint:mouseLocation inRect:rect]) {
             if (layer == 0) {
                 self.captureWindowRect = rect;
@@ -229,8 +230,8 @@ const int kAdjustKnown = 8;
 
 - (void)startCaptureWithScreen:(NSScreen *)screen {
     [self doSnapshot:screen];
-    [self.window setLevel:NSStatusWindowLevel];
-    //[self.window setLevel:kCGMaximumWindowLevel];
+    //[self.window setLevel:NSStatusWindowLevel];
+    [self.window setLevel:kCGMaximumWindowLevel];
     [self.window setMovableByWindowBackground:NO];
     [self.window setExcludedFromWindowsMenu:YES];
     [self.window setHasShadow:NO];
