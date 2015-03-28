@@ -98,7 +98,7 @@ const int kAdjustKnown = 8;
     }
     else {
         [self redrawView:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotifyMouseLocationChange object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotifyMouseLocationChange object:nil userInfo:@{@"context":self}];
     }
 }
 
@@ -248,6 +248,7 @@ const int kAdjustKnown = 8;
 
     self.snipView = self.window.contentView;
     self.window.mouseDelegate = self;
+    [self.snipView setupTrackingArea:self.window.screen.frame];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNotifyMouseChange:) name:kNotifyMouseLocationChange object:nil];
     [self showWindow:nil];
@@ -256,6 +257,7 @@ const int kAdjustKnown = 8;
 }
 
 - (void)onNotifyMouseChange:(NSNotification *)notify {
+    if (notify.userInfo[@"context"] == self) return;
     if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_HILIGHT && self.window.isVisible && [SnipUtil isPoint:[NSEvent mouseLocation] inRect:self.window.screen.frame]) {
 
         __weak __typeof__(self) weakSelf = self;
@@ -281,7 +283,7 @@ const int kAdjustKnown = 8;
         NSLog(@"mouse down :%@", NSStringFromPoint([NSEvent mouseLocation]));
         [SnipManager sharedInstance].captureState = CAPTURE_STATE_FIRSTMOUSEDOWN;
         self.startPoint = [NSEvent mouseLocation];
-        [self.snipView setupTracking];
+        [self.snipView setupTool];
         [self setupToolClick];
     }
     else if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_ADJUST) {

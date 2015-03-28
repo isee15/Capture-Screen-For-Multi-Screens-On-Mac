@@ -19,6 +19,8 @@
     // Using NSBorderlessWindowMask results in a window without a title bar.
     if (self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO]) {
         [self setAcceptsMouseMovedEvents:YES];
+        self.movable = NO;
+        self.movableByWindowBackground = NO;
     }
     return self;
 }
@@ -26,6 +28,8 @@
 - (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag screen:(NSScreen *)screen {
     if (self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO screen:screen]) {
         [self setAcceptsMouseMovedEvents:YES];
+        self.movable = NO;
+        self.movableByWindowBackground = NO;
     }
     return self;
 }

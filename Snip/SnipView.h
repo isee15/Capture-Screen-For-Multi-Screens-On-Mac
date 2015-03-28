@@ -22,7 +22,9 @@
 @property ToolContainer *toolContainer;
 
 
-- (void)setupTracking;
+- (void)setupTrackingArea:(NSRect)rect;
+
+- (void)setupTool;
 
 - (void)setupDrawPath;
 

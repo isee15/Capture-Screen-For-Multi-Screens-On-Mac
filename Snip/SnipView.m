@@ -29,7 +29,14 @@ const int kDRAG_POINT_LEN = 5;
     return self;
 }
 
-- (void)setupTracking {
+- (void)setupTrackingArea:(NSRect)rect
+{
+    self.trackingArea = [[NSTrackingArea alloc] initWithRect:rect options:NSTrackingMouseMoved | NSTrackingActiveAlways owner:self userInfo:nil];
+    NSLog(@"track init:%@", NSStringFromRect(self.frame));
+    [self addTrackingArea:self.trackingArea];
+}
+
+- (void)setupTool {
     self.toolContainer = [[ToolContainer alloc] init];
     [self addSubview:self.toolContainer];
     [self hideToolkit];
@@ -37,10 +44,6 @@ const int kDRAG_POINT_LEN = 5;
     self.tipView = [[SimpleLabelView alloc] init];
     [self addSubview:self.tipView];
     [self hideTip];
-
-    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.frame options:NSTrackingMouseMoved | NSTrackingActiveAlways owner:self userInfo:nil];
-    NSLog(@"track init:%@", NSStringFromRect(self.frame));
-    [self addTrackingArea:_trackingArea];
 }
 
 - (void)setupDrawPath {
