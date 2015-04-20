@@ -11,21 +11,24 @@
 
 @implementation DrawPathView
 
-- (instancetype)init {
+- (instancetype)init
+{
     if (self = [super init]) {
         _rectArray = [NSMutableArray array];
     }
     return self;
 }
 
-- (NSRect)rectFromScreen:(NSRect)rect {
+- (NSRect)rectFromScreen:(NSRect)rect
+{
     NSRect rectRet = [self.window convertRectFromScreen:rect];
     rectRet.origin.x -= self.frame.origin.x;
     rectRet.origin.y -= self.frame.origin.y;
     return rectRet;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect
+{
     [super drawRect:dirtyRect];
     if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_EDIT) {
         [self drawCommentInRect:self.bounds];
@@ -36,7 +39,8 @@
     // Drawing code here.
 }
 
-- (void)drawCommentInRect:(NSRect)imageRect {
+- (void)drawCommentInRect:(NSRect)imageRect
+{
     NSBezierPath *path = [NSBezierPath bezierPathWithRect:imageRect];
     [path addClip];
     [[NSColor redColor] set];
@@ -45,7 +49,8 @@
     }
 }
 
-- (void)drawFinishCommentInRect:(NSRect)imageRect {
+- (void)drawFinishCommentInRect:(NSRect)imageRect
+{
     NSBezierPath *path = [NSBezierPath bezierPathWithRect:imageRect];
     [path addClip];
     [[NSColor redColor] set];
@@ -54,7 +59,8 @@
     }
 }
 
-- (void)drawShape:(DrawPathInfo *)info inBackground:(BOOL)bIn {
+- (void)drawShape:(DrawPathInfo *)info inBackground:(BOOL)bIn
+{
     NSRect rect = NSMakeRect(info.startPoint.x, info.startPoint.y, info.endPoint.x - info.startPoint.x, info.endPoint.y - info.startPoint.y);
     if (bIn) {
         rect = [self.window convertRectFromScreen:rect];
@@ -88,7 +94,7 @@
 
             [rectPath moveToPoint:CGPointZero];
             CGFloat ex1 = sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
-            if (abs(rect.size.width) < 5 && abs(rect.size.height) < 5 ) return;
+            if (abs(rect.size.width) < 5 && abs(rect.size.height) < 5) return;
             [rectPath lineToPoint:NSMakePoint(ex1, 0)];
             [rectPath lineToPoint:NSMakePoint(ex1 - 8, 5)];
             [rectPath lineToPoint:NSMakePoint(ex1 - 2, 0)];

@@ -10,4 +10,5 @@
 
 @interface NSColor (Helper)
 + (NSColor *)colorFromInt:(int)colorValue;
++ (NSColor*)colorWithHex:(NSString *)hexValue alpha:(CGFloat)alphaValue;
 @end

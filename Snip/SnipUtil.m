@@ -9,7 +9,8 @@
 #import "SnipUtil.h"
 
 @implementation SnipUtil
-+ (CGImageRef)screenShot:(NSScreen *)screen {
++ (CGImageRef)screenShot:(NSScreen *)screen
+{
     CFArrayRef windowsRef = CGWindowListCreate(kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
 
     NSRect rect = [screen frame];
@@ -28,17 +29,20 @@
     return imgRef;
 }
 
-+ (BOOL)isPoint:(NSPoint)point inRect:(NSRect)rect {
++ (BOOL)isPoint:(NSPoint)point inRect:(NSRect)rect
+{
     //if (NSPointInRect(point, rect))
     //NSLog(@"point:%@ in rect:%@",NSStringFromPoint(point),NSStringFromRect(rect));
     return NSPointInRect(point, rect);
 }
 
-+ (double)pointDistance:(NSPoint)p1 toPoint:(NSPoint)p2 {
++ (double)pointDistance:(NSPoint)p1 toPoint:(NSPoint)p2
+{
     return (p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y);
 }
 
-+ (NSRect)uniformRect:(NSRect)rect {
++ (NSRect)uniformRect:(NSRect)rect
+{
     double x = rect.origin.x;
     double y = rect.origin.y;
     double w = rect.size.width;
@@ -54,11 +58,13 @@
     return NSMakeRect(x, y, w, h);
 }
 
-+ (NSRect)rectToZero:(NSRect)rect {
++ (NSRect)rectToZero:(NSRect)rect
+{
     return NSOffsetRect(rect, -rect.origin.x, -rect.origin.y);
 }
 
-+ (NSRect)cgWindowRectToScreenRect:(CGRect)windowRect {
++ (NSRect)cgWindowRectToScreenRect:(CGRect)windowRect
+{
     NSRect mainRect = [NSScreen mainScreen].frame;
     //NSRect snipRect = screen.frame;
     for (NSScreen *screen in [NSScreen screens]) {
@@ -70,7 +76,8 @@
     return rect;
 }
 
-+ (ImageButton *)createButton:(NSImage *)image withAlternate:(NSImage *)alter {
++ (ImageButton *)createButton:(NSImage *)image withAlternate:(NSImage *)alter
+{
     ImageButton *button = [[ImageButton alloc] init];
     //button.bordered = NO;
     //button.bezelStyle = NSShadowlessSquareBezelStyle;

@@ -10,7 +10,8 @@
 
 @implementation SimpleLabelView
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect
+{
     [super drawRect:dirtyRect];
     NSBezierPath *bgPath = [NSBezierPath bezierPathWithRoundedRect:self.bounds xRadius:6 yRadius:6];
     [bgPath setClip];

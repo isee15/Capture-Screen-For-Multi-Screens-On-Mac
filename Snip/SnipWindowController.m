@@ -14,7 +14,7 @@
 const int kAdjustKnown = 8;
 
 @interface SnipWindowController ()
-@property SnipWindow *window;
+//@property SnipWindow *window;
 @property(weak) SnipView *snipView;
 @property NSImage *originImage;
 @property NSImage *darkImage;
@@ -33,16 +33,19 @@ const int kAdjustKnown = 8;
 
 @implementation SnipWindowController
 
-- (void)windowDidLoad {
+- (void)windowDidLoad
+{
     [super windowDidLoad];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)doSnapshot:(NSScreen *)screen {
+- (void)doSnapshot:(NSScreen *)screen
+{
     // 获取所有OnScreen的窗口
     //kCGWindowListExcludeDesktopElements
 
@@ -61,7 +64,8 @@ const int kAdjustKnown = 8;
 
 }
 
-- (void)captureAppScreen {
+- (void)captureAppScreen
+{
     NSScreen *screen = self.window.screen;
     NSPoint mouseLocation = [NSEvent mouseLocation];
     //NSLog(@"screen:%@ mouse:%@",NSStringFromRect(screen.frame),NSStringFromPoint(mouseLocation));
@@ -80,12 +84,12 @@ const int kAdjustKnown = 8;
             if (layer == 0) {
                 self.captureWindowRect = rect;
                 break;
-
             }
             else {
                 if (rect.size.width * rect.size.height < minArea) {
                     self.captureWindowRect = rect;
                     minArea = rect.size.width * rect.size.height;
+                    break;
                 }
 
             }
@@ -102,7 +106,8 @@ const int kAdjustKnown = 8;
     }
 }
 
-- (void)redrawView:(NSImage *)image {
+- (void)redrawView:(NSImage *)image
+{
     self.captureWindowRect = NSIntersectionRect(self.captureWindowRect, self.window.frame);
     if (image != nil && (int) self.lastRect.origin.x == (int) self.captureWindowRect.origin.x
             && (int) self.lastRect.origin.y == (int) self.captureWindowRect.origin.y
@@ -117,12 +122,13 @@ const int kAdjustKnown = 8;
         [self.snipView setDrawingRect:rect];
         [self.snipView setNeedsDisplay:YES];
         self.lastRect = self.captureWindowRect;
-        NSLog(@"redraw hilight:[%@]", NSStringFromRect(rect));
+        //NSLog(@"redraw hilight:[%@]", NSStringFromRect(rect));
     });
 
 }
 
-- (NSPoint)dragPointCenter:(int)index {
+- (NSPoint)dragPointCenter:(int)index
+{
     double x = 0, y = 0;
     switch (index) {
         case 0:
@@ -165,7 +171,8 @@ const int kAdjustKnown = 8;
 }
 
 
-- (int)dragDirectionFromPoint:(NSPoint)point {
+- (int)dragDirectionFromPoint:(NSPoint)point
+{
     if (NSWidth(self.captureWindowRect) <= kAdjustKnown * 2 || NSHeight(self.captureWindowRect) <= kAdjustKnown * 2) {
         if (NSPointInRect(point, self.captureWindowRect)) {
             return 8;
@@ -192,7 +199,8 @@ const int kAdjustKnown = 8;
     return ret;
 }
 
-- (void)setupToolClick {
+- (void)setupToolClick
+{
     __weak __typeof__(self) weakSelf = self;
     self.snipView.toolContainer.toolClick = ^(long index) {
         __typeof__(self) strongSelf = weakSelf;
@@ -228,18 +236,10 @@ const int kAdjustKnown = 8;
 
 }
 
-- (void)startCaptureWithScreen:(NSScreen *)screen {
+- (void)startCaptureWithScreen:(NSScreen *)screen
+{
     [self doSnapshot:screen];
-    //[self.window setLevel:NSStatusWindowLevel];
-    [self.window setLevel:kCGMaximumWindowLevel];
-    [self.window setMovableByWindowBackground:NO];
-    [self.window setExcludedFromWindowsMenu:YES];
-    [self.window setHasShadow:NO];
-    [self.window setHidesOnDeactivate:NO];
-    [self.window setRestorable:NO];
-    [self.window disableSnapshotRestoration];
-    //[self.window setAutorecalculatesKeyViewLoop:YES];
-
+    
     [self.window setBackgroundColor:[NSColor colorWithPatternImage:self.darkImage]];
     NSRect screenFrame = [screen frame];
     screenFrame.size.width /= 1;
@@ -247,7 +247,7 @@ const int kAdjustKnown = 8;
     [self.window setFrame:screenFrame display:YES animate:NO];
 
     self.snipView = self.window.contentView;
-    self.window.mouseDelegate = self;
+    ((SnipWindow *) self.window).mouseDelegate = self;
     [self.snipView setupTrackingArea:self.window.screen.frame];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNotifyMouseChange:) name:kNotifyMouseLocationChange object:nil];
@@ -256,7 +256,8 @@ const int kAdjustKnown = 8;
     [self captureAppScreen];
 }
 
-- (void)onNotifyMouseChange:(NSNotification *)notify {
+- (void)onNotifyMouseChange:(NSNotification *)notify
+{
     if (notify.userInfo[@"context"] == self) return;
     if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_HILIGHT && self.window.isVisible && [SnipUtil isPoint:[NSEvent mouseLocation] inRect:self.window.screen.frame]) {
 
@@ -271,7 +272,8 @@ const int kAdjustKnown = 8;
     }
 }
 
-- (void)mouseDown:(NSEvent *)event {
+- (void)mouseDown:(NSEvent *)event
+{
     if ([event clickCount] == 2) {
         NSLog(@"double click");
         if ([SnipManager sharedInstance].captureState != CAPTURE_STATE_HILIGHT) {
@@ -307,7 +309,8 @@ const int kAdjustKnown = 8;
 
 }
 
-- (void)mouseUp:(NSEvent *)theEvent {
+- (void)mouseUp:(NSEvent *)theEvent
+{
     if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_FIRSTMOUSEDOWN || [SnipManager sharedInstance].captureState == CAPTURE_STATE_READYADJUST) {
         [SnipManager sharedInstance].captureState = CAPTURE_STATE_ADJUST;
         [self.snipView setNeedsDisplay:YES];
@@ -328,7 +331,8 @@ const int kAdjustKnown = 8;
 
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent {
+- (void)mouseDragged:(NSEvent *)theEvent
+{
     if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_FIRSTMOUSEDOWN
             || [SnipManager sharedInstance].captureState == CAPTURE_STATE_READYADJUST) {
         [SnipManager sharedInstance].captureState = CAPTURE_STATE_READYADJUST;
@@ -432,13 +436,15 @@ const int kAdjustKnown = 8;
     }
 }
 
-- (void)mouseMoved:(NSEvent *)theEvent {
+- (void)mouseMoved:(NSEvent *)theEvent
+{
     if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_HILIGHT) {
         [self captureAppScreen];
     }
 }
 
-- (void)onOK {
+- (void)onOK
+{
     // 把选择的截图保存到粘贴板
     [self.originImage lockFocus];
     NSRect rect = NSIntersectionRect(self.captureWindowRect, self.window.frame);

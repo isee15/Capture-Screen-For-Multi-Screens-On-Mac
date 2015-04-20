@@ -10,13 +10,15 @@
 
 @implementation ImageButton
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect
+{
     [super drawRect:dirtyRect];
 
     // Drawing code here.
 }
 
-- (void)mouseDown:(NSEvent *)theEvent {
+- (void)mouseDown:(NSEvent *)theEvent
+{
     [NSApp sendAction:self.action
                    to:self.target
                  from:self];

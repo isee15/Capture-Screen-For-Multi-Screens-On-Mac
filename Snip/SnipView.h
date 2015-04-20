@@ -21,7 +21,6 @@
 //@property DrawPathInfo *currentInfo;
 @property ToolContainer *toolContainer;
 
-
 - (void)setupTrackingArea:(NSRect)rect;
 
 - (void)setupTool;

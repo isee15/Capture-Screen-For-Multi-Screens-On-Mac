@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-typedef NS_ENUM(NSInteger, CAPTURE_STATE) {
+typedef NS_ENUM(NSInteger, CAPTURE_STATE)
+{
     CAPTURE_STATE_IDLE,
     CAPTURE_STATE_HILIGHT,
     CAPTURE_STATE_FIRSTMOUSEDOWN,
@@ -19,7 +20,8 @@ typedef NS_ENUM(NSInteger, CAPTURE_STATE) {
     CAPTURE_STATE_DONE,
 };
 
-typedef NS_ENUM(int, DRAW_TYPE) {
+typedef NS_ENUM(int, DRAW_TYPE)
+{
     DRAW_TYPE_RECT,
     DRAW_TYPE_ELLIPSE,
     DRAW_TYPE_ARROW
@@ -41,6 +43,8 @@ extern const int kKEY_ESC_CODE;
 @property CAPTURE_STATE captureState;
 
 @property DRAW_TYPE drawType;
+
+@property BOOL isWorking;
 
 + (instancetype)sharedInstance;
 

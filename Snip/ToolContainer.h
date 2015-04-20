@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef NS_ENUM(NSInteger, ActionType) {
+typedef NS_ENUM(NSInteger, ActionType)
+{
     ActionCancel,
     ActionOK,
     ActionShapeRect,

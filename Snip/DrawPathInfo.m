@@ -10,7 +10,8 @@
 
 @implementation DrawPathInfo
 
-- (instancetype)initWith:(NSPoint)startPoint andEndPoint:(NSPoint)endPoint andType:(DRAW_TYPE)drawType {
+- (instancetype)initWith:(NSPoint)startPoint andEndPoint:(NSPoint)endPoint andType:(DRAW_TYPE)drawType
+{
     if (self = [super init]) {
         _startPoint = startPoint;
         _endPoint = endPoint;

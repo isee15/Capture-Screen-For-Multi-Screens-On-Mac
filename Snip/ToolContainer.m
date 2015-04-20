@@ -19,7 +19,8 @@
 
 @implementation ToolContainer
 
-- (instancetype)init {
+- (instancetype)init
+{
     if (self = [super init]) {
         _rectButton = [SnipUtil createButton:[NSImage imageNamed:@"ScreenCapture_toolbar_rect_ineffect"] withAlternate:nil];
         _rectButton.tag = ActionShapeRect;
@@ -57,27 +58,31 @@
 }
 
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect
+{
     [super drawRect:dirtyRect];
-    NSBezierPath *bgPath = [NSBezierPath bezierPathWithRoundedRect:self.bounds xRadius:6 yRadius:6];
+    NSBezierPath *bgPath = [NSBezierPath bezierPathWithRoundedRect:self.bounds xRadius:3 yRadius:3];
     [bgPath setClip];
     [[NSColor colorWithCalibratedWhite:0.0 alpha:0.8f] setFill];
     NSRectFill(self.bounds);
     // Drawing code here.
 }
 
-- (void)setFrame:(NSRect)frame {
+- (void)setFrame:(NSRect)frame
+{
     [super setFrame:frame];
-    int step = 30;
-    [self.rectButton setFrame:NSMakeRect(0, 0, 30, 26)];
-    [self.ellipseButton setFrame:NSMakeRect(step * 1, 0, 30, 26)];
-    [self.arrowButton setFrame:NSMakeRect(step * 2, 0, 30, 26)];
-    [self.cancelButton setFrame:NSMakeRect(step * 3, 0, 30, 26)];
-    [self.okButton setFrame:NSMakeRect(step * 4, 0, 30, 26)];
+    int step = 35;
+    int margin = 10;
+    [self.rectButton setFrame:NSMakeRect(margin, 0, 28, 26)];
+    [self.ellipseButton setFrame:NSMakeRect(margin+step * 1, 0, 28, 26)];
+    [self.arrowButton setFrame:NSMakeRect(margin+step * 2, 0, 28, 26)];
+    [self.cancelButton setFrame:NSMakeRect(margin+step * 3, 0, 28, 26)];
+    [self.okButton setFrame:NSMakeRect(margin+step * 4, 0, 28, 26)];
 
 }
 
-- (void)onToolClick:(id)sender {
+- (void)onToolClick:(NSControl *)sender
+{
     //need refactor
     if (sender == self.rectButton) {
         self.rectButton.image = [NSImage imageNamed:@"ScreenCapture_toolbar_rect_effect"];
@@ -97,6 +102,10 @@
     if (self.toolClick) {
         self.toolClick([sender tag]);
     }
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
 }
 
 @end

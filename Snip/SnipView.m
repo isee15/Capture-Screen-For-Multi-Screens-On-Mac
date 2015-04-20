@@ -21,10 +21,12 @@ const int kDRAG_POINT_LEN = 5;
 @implementation SnipView
 
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
 
     if (self = [super initWithCoder:coder]) {
         //_rectArray = [NSMutableArray array];
+        
     }
     return self;
 }
@@ -36,7 +38,8 @@ const int kDRAG_POINT_LEN = 5;
     [self addTrackingArea:self.trackingArea];
 }
 
-- (void)setupTool {
+- (void)setupTool
+{
     self.toolContainer = [[ToolContainer alloc] init];
     [self addSubview:self.toolContainer];
     [self hideToolkit];
@@ -46,7 +49,8 @@ const int kDRAG_POINT_LEN = 5;
     [self hideTip];
 }
 
-- (void)setupDrawPath {
+- (void)setupDrawPath
+{
     if (self.pathView != nil) return;
     NSLog(@"setupDrawPath");
     self.pathView = [[DrawPathView alloc] init];
@@ -56,30 +60,52 @@ const int kDRAG_POINT_LEN = 5;
     [self.pathView setHidden:NO];
 }
 
-- (void)showToolkit {
-    NSLog(@"show toolkit");
+- (void)showToolkit
+{
+    NSLog(@"show toolkit:%@",self);
     NSRect imageRect = NSIntersectionRect(self.drawingRect, self.bounds);
     double y = imageRect.origin.y - 28;
     double x = imageRect.origin.x + imageRect.size.width;
     if (y < 0) y = 0;
-    if (x < 30*5) x = 30*5;
-    [self.toolContainer setFrame:NSMakeRect(x - 30 * 5, y, 30 * 5, 26)];
-    [self.toolContainer setHidden:NO];
+    int margin = 10;
+    int toolWidth = 35 * 5 + margin * 2 - (35-28);
+    if (x < toolWidth) x = toolWidth;
+    if (!NSEqualRects(self.toolContainer.frame,NSMakeRect(x - toolWidth, y, toolWidth, 26))) {
+        [self.toolContainer setFrame:NSMakeRect(x - toolWidth, y, toolWidth, 26)];
+    }
+    if (self.toolContainer.isHidden) {
+        [self.toolContainer setHidden:NO];
+    }
 }
 
-- (void)hideToolkit {
+- (void)hideToolkit
+{
     [self.toolContainer setHidden:YES];
 }
 
-- (void)showTip {
+//- (void)mouseMoved:(NSEvent *)theEvent
+//{
+//    [super mouseMoved:theEvent];
+//    NSLog(@"snipview track mouse moved:%@",self);
+//    
+//}
+- (void)showTip
+{
     NSPoint mouseLocation = [NSEvent mouseLocation];
     NSRect frame = self.window.frame;
     if (mouseLocation.x > frame.origin.x + frame.size.width - 100) {
         mouseLocation.x -= 100;
     }
+    if (mouseLocation.x < frame.origin.x) {
+        mouseLocation.x = frame.origin.x;
+    }
     if (mouseLocation.y > frame.origin.y + frame.size.height - 26) {
         mouseLocation.y -= 26;
     }
+    if (mouseLocation.y < frame.origin.y) {
+        mouseLocation.y = frame.origin.y;
+    }
+    
     NSRect rect = NSMakeRect(mouseLocation.x, mouseLocation.y, 100, 25);
     NSRect imageRect = NSIntersectionRect(self.drawingRect, self.bounds);
     self.tipView.text = [NSString stringWithFormat:@"%dX%d", (int) imageRect.size.width, (int) imageRect.size.height];
@@ -87,15 +113,18 @@ const int kDRAG_POINT_LEN = 5;
     [self.tipView setHidden:NO];
 }
 
-- (void)hideTip {
+- (void)hideTip
+{
     [self.tipView setHidden:YES];
 }
 
-- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent {
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
+{
     return YES;
 }
 
-- (NSRect)pointRect:(int)index inRect:(NSRect)rect {
+- (NSRect)pointRect:(int)index inRect:(NSRect)rect
+{
     double x = 0, y = 0;
     switch (index) {
         case 0:
@@ -137,7 +166,9 @@ const int kDRAG_POINT_LEN = 5;
     return NSMakeRect(x - kDRAG_POINT_LEN, y - kDRAG_POINT_LEN, kDRAG_POINT_LEN * 2, kDRAG_POINT_LEN * 2);
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSDisableScreenUpdates();
     [super drawRect:dirtyRect];
     /*if (self.window.screen)
     {
@@ -184,7 +215,11 @@ const int kDRAG_POINT_LEN = 5;
 //            }
 //        }
     }
+    if (self.toolContainer != nil && !self.toolContainer.isHidden) {
+        [self showToolkit];
+    }
     // Drawing code here.
+    NSEnableScreenUpdates();
 }
 
 @end

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MouseEventProtocol.h"
 
-@interface SnipWindow : NSWindow
+@interface SnipWindow : NSPanel
 
 @property(weak) id <MouseEventProtocol> mouseDelegate;
 @end
