@@ -448,12 +448,13 @@ const int kAdjustKnown = 8;
     // 把选择的截图保存到粘贴板
     [self.originImage lockFocus];
     NSRect rect = NSIntersectionRect(self.captureWindowRect, self.window.frame);
+    rect = [self.window convertRectFromScreen:rect];
     //blurry mess up
     rect = NSIntegralRect(rect);
     
-    [self.snipView.pathView drawFinishCommentInRect:[self.window convertRectFromScreen:rect]];
+    [self.snipView.pathView drawFinishCommentInRect:rect];
     //先设置 下面一个实例
-    NSBitmapImageRep *bits = [[NSBitmapImageRep alloc] initWithFocusedViewRect:[self.window convertRectFromScreen:rect]];
+    NSBitmapImageRep *bits = [[NSBitmapImageRep alloc] initWithFocusedViewRect:rect];
 
     [self.originImage unlockFocus];
 
@@ -461,9 +462,7 @@ const int kAdjustKnown = 8;
     NSDictionary *imageProps = @{NSImageCompressionFactor : @(1.0)};
 
     //之后 转化为NSData 以便存到文件中
-    NSData *imageData = [bits representationUsingType:NSPNGFileType properties:nil];
-    NSString *path = [NSString stringWithFormat:@"%@/1111.jpg",[[NSBundle mainBundle] bundlePath]];
-    [imageData writeToFile:path atomically:YES];
+    NSData *imageData = [bits representationUsingType:NSJPEGFileType properties:imageProps];
     NSImage *pasteImage = [[NSImage alloc] initWithData:imageData];
     if (pasteImage != nil) {
         NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
