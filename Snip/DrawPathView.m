@@ -94,7 +94,7 @@
 
             [rectPath moveToPoint:CGPointZero];
             CGFloat ex1 = sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
-            if (abs(rect.size.width) < 5 && abs(rect.size.height) < 5) return;
+            if (fabs(rect.size.width) < 5 && fabs(rect.size.height) < 5) return;
             [rectPath lineToPoint:NSMakePoint(ex1, 0)];
             [rectPath lineToPoint:NSMakePoint(ex1 - 8, 5)];
             [rectPath lineToPoint:NSMakePoint(ex1 - 2, 0)];
