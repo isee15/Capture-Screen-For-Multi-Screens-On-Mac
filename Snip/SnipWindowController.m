@@ -10,6 +10,7 @@
 #import "SnipWindow.h"
 #import "SnipUtil.h"
 #import "SnipView.h"
+#import "AutoHeightTextView.h"
 
 const int kAdjustKnown = 8;
 
@@ -29,6 +30,10 @@ const int kAdjustKnown = 8;
 @property NSPoint rectBeginPoint;
 @property NSPoint rectEndPoint;
 @property BOOL rectDrawing;
+
+@property(nonatomic) NSMutableArray *linePoints;
+// text edit
+@property(nonatomic, strong) AutoHeightTextView *editTextView;
 @end
 
 @implementation SnipWindowController
@@ -204,6 +209,7 @@ const int kAdjustKnown = 8;
     __weak __typeof__(self) weakSelf = self;
     self.snipView.toolContainer.toolClick = ^(long index) {
         __typeof__(self) strongSelf = weakSelf;
+        [self endEditText];
         switch (index) {
             case ActionShapeRect:
                 [SnipManager sharedInstance].drawType = DRAW_TYPE_RECT;
@@ -219,6 +225,18 @@ const int kAdjustKnown = 8;
                 break;
             case ActionShapeArrow:
                 [SnipManager sharedInstance].drawType = DRAW_TYPE_ARROW;
+                [SnipManager sharedInstance].captureState = CAPTURE_STATE_EDIT;
+                [strongSelf.snipView setupDrawPath];
+                [strongSelf.snipView setNeedsDisplay:YES];
+                break;
+            case ActionEditPen:
+                [SnipManager sharedInstance].drawType = DRAW_TYPE_POINT;
+                [SnipManager sharedInstance].captureState = CAPTURE_STATE_EDIT;
+                [strongSelf.snipView setupDrawPath];
+                [strongSelf.snipView setNeedsDisplay:YES];
+                break;
+            case ActionEditText:
+                [SnipManager sharedInstance].drawType = DRAW_TYPE_TEXT;
                 [SnipManager sharedInstance].captureState = CAPTURE_STATE_EDIT;
                 [strongSelf.snipView setupDrawPath];
                 [strongSelf.snipView setNeedsDisplay:YES];
@@ -301,8 +319,34 @@ const int kAdjustKnown = 8;
     else {
         NSPoint mouseLocation = [NSEvent mouseLocation];
         if (NSPointInRect(mouseLocation, self.captureWindowRect)) {
+            if (DRAW_TYPE_TEXT == [SnipManager sharedInstance].drawType) {
+                if  (self.editTextView.superview != nil) {
+                    [self endEditText];
+                    return;
+                }
+            }
             self.rectBeginPoint = mouseLocation;
             self.rectDrawing = YES;
+            self.linePoints = [NSMutableArray array];
+            if (DRAW_TYPE_TEXT == [SnipManager sharedInstance].drawType) {
+                if  (self.editTextView.superview == nil) {
+                    self.editTextView = [[AutoHeightTextView alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)];
+                    self.editTextView.backgroundColor = [NSColor clearColor];
+                    self.editTextView.wantsLayer = YES;
+                    self.editTextView.layer.borderColor = [NSColor redColor].CGColor;
+                    self.editTextView.layer.borderWidth = 0.5;
+                    self.editTextView.font = [NSFont systemFontOfSize:14];
+                    self.editTextView.textColor = [NSColor redColor];
+                    self.editTextView.insertionPointColor = [NSColor redColor];
+                    self.editTextView.textContainerInset = CGSizeMake(0, 0);
+
+                    [self.snipView addSubview:self.editTextView];
+                    self.editTextView.frame = CGRectMake(mouseLocation.x, mouseLocation.y-12, 120, 24);
+                    self.rectBeginPoint = CGPointMake(mouseLocation.x, mouseLocation.y-12 + 24);
+                    [self.editTextView setSelectedRange:NSMakeRange(0,0)];
+                    [self.window makeFirstResponder:self.editTextView];
+                }
+            }
         }
     }
 
@@ -324,7 +368,12 @@ const int kAdjustKnown = 8;
         if (self.rectDrawing) {
             self.rectDrawing = NO;
             self.rectEndPoint = [NSEvent mouseLocation];
-            [self.snipView.pathView.rectArray addObject:[[DrawPathInfo alloc] initWith:self.rectBeginPoint andEndPoint:self.rectEndPoint andType:[SnipManager sharedInstance].drawType]];
+            if ([SnipManager sharedInstance].drawType == DRAW_TYPE_POINT) {
+                [self.snipView.pathView.rectArray addObject:[[DrawPathInfo alloc] initWith:[self.linePoints copy] andType:[SnipManager sharedInstance].drawType]];
+            }
+            else {
+                [self.snipView.pathView.rectArray addObject:[[DrawPathInfo alloc] initWith:self.rectBeginPoint andEndPoint:self.rectEndPoint andType:[SnipManager sharedInstance].drawType]];
+            }
             [self.snipView setNeedsDisplayInRect:[self.window convertRectFromScreen:self.captureWindowRect]];
         }
     }
@@ -346,7 +395,13 @@ const int kAdjustKnown = 8;
     else if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_EDIT) {
         if (self.rectDrawing) {
             self.rectEndPoint = [NSEvent mouseLocation];
-            self.snipView.pathView.currentInfo = [[DrawPathInfo alloc] initWith:self.rectBeginPoint andEndPoint:self.rectEndPoint andType:[SnipManager sharedInstance].drawType];
+            if ([SnipManager sharedInstance].drawType == DRAW_TYPE_POINT) {
+                [self.linePoints addObject:[NSValue valueWithPoint:self.rectEndPoint]];
+                self.snipView.pathView.currentInfo = [[DrawPathInfo alloc] initWith:[self.linePoints copy] andType:[SnipManager sharedInstance].drawType];
+            }
+            else {
+                 self.snipView.pathView.currentInfo = [[DrawPathInfo alloc] initWith:self.rectBeginPoint andEndPoint:self.rectEndPoint andType:[SnipManager sharedInstance].drawType];
+            }
             [self.snipView.pathView setNeedsDisplay:YES];
         }
     }
@@ -440,6 +495,23 @@ const int kAdjustKnown = 8;
 {
     if ([SnipManager sharedInstance].captureState == CAPTURE_STATE_HILIGHT) {
         [self captureAppScreen];
+    }
+}
+
+- (void)endEditText
+{
+    if (DRAW_TYPE_TEXT == [SnipManager sharedInstance].drawType) {
+        if  (self.editTextView.superview != nil) {
+            [self.editTextView removeFromSuperview];
+
+            self.rectDrawing = NO;
+            self.rectEndPoint = CGPointMake(self.rectBeginPoint.x + self.editTextView.frame.size.width, self.rectBeginPoint.y - self.editTextView.frame.size.height);
+
+            [self.snipView.pathView.rectArray addObject:[[DrawPathInfo alloc] initWith:self.rectBeginPoint andEndPoint:self.rectEndPoint andText:self.editTextView.string andType:[SnipManager sharedInstance].drawType]];
+
+            [self.snipView setNeedsDisplayInRect:[self.window convertRectFromScreen:self.captureWindowRect]];
+            return;
+        }
     }
 }
 

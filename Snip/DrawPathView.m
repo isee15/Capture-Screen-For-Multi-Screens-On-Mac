@@ -110,6 +110,52 @@
             [rectPath stroke];
         }
             break;
+        case DRAW_TYPE_POINT: {
+            NSBezierPath *pointPath = [NSBezierPath bezierPath];
+            [pointPath setLineWidth:4];
+            [pointPath setLineCapStyle:NSRoundLineCapStyle];
+            [pointPath setLineJoinStyle:NSRoundLineJoinStyle];
+            NSValue *lastPoint;
+            for(NSValue *value in info.points)
+            {
+                NSPoint point = value.pointValue;
+                NSLog(@"point:%@",NSStringFromPoint(point));
+                NSRect rect = NSMakeRect(point.x, point.y, 1,1);
+                if (bIn) {
+                    rect = [self.window convertRectFromScreen:rect];
+                }
+                else {
+                    rect = [self rectFromScreen:rect];
+                }
+                NSLog(@"rect.point:%@",NSStringFromPoint(rect.origin));
+                if (lastPoint == nil) {
+                    [pointPath moveToPoint:rect.origin];
+                    lastPoint = value;
+                }
+                else {
+                    [pointPath lineToPoint:rect.origin];
+                }
+            }
+            [pointPath stroke];
+        }
+            break;
+        case DRAW_TYPE_TEXT: {
+            NSString *text = info.editText;
+            if (text.length > 0) {
+                NSRect rect = NSMakeRect(info.startPoint.x, info.startPoint.y, info.endPoint.x - info.startPoint.x, info.endPoint.y - info.startPoint.y);
+                if (bIn) {
+                    rect = [self.window convertRectFromScreen:rect];
+                }
+                else {
+                    rect = [self rectFromScreen:rect];
+                }
+                rect.origin.x += 5;
+                rect.origin.y += 1;
+                rect = [SnipUtil uniformRect:rect];
+                [text drawInRect:rect withAttributes:@{NSFontAttributeName:[NSFont systemFontOfSize:14],NSForegroundColorAttributeName:[NSColor redColor]}];
+            }
+        }
+            break;
     }
 }
 

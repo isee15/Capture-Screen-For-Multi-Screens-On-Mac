@@ -19,6 +19,13 @@
 		32E071CA1A7C6A5A0094D5DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32E071C91A7C6A5A0094D5DE /* Images.xcassets */; };
 		32E071CD1A7C6A5A0094D5DE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E071CB1A7C6A5A0094D5DE /* MainMenu.xib */; };
 		32E071D91A7C6A5A0094D5DE /* SnipTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E071D81A7C6A5A0094D5DE /* SnipTests.m */; };
+		B30E2DBE205F6180008CD6A4 /* ScreenCapture_toolbar_text_ineffect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = B30E2DBD205F617F008CD6A4 /* ScreenCapture_toolbar_text_ineffect.tiff */; };
+		B30E2DC0205F6288008CD6A4 /* ScreenCapture_toolbar_text_effect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = B30E2DBF205F6288008CD6A4 /* ScreenCapture_toolbar_text_effect.tiff */; };
+		B30E2DC3205F8482008CD6A4 /* ScreenCapture_toolbar_pen_ineffect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = B30E2DC1205F8482008CD6A4 /* ScreenCapture_toolbar_pen_ineffect.tiff */; };
+		B30E2DC4205F8482008CD6A4 /* ScreenCapture_toolbar_pen_effect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = B30E2DC2205F8482008CD6A4 /* ScreenCapture_toolbar_pen_effect.tiff */; };
+		B30E2DC7205F9915008CD6A4 /* AutoHeightTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B30E2DC6205F9915008CD6A4 /* AutoHeightTextView.m */; };
+		B3816566205FB0D000659960 /* ScreenCapture_toolbar_mosaic_ineffect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = B3816564205FB0D000659960 /* ScreenCapture_toolbar_mosaic_ineffect.tiff */; };
+		B3816567205FB0D000659960 /* ScreenCapture_toolbar_mosaic_effect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = B3816565205FB0D000659960 /* ScreenCapture_toolbar_mosaic_effect.tiff */; };
 		D265E3851A820CFB00E301D9 /* ScreenCapture_toolbar_cross_normal.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D265E3811A820CFB00E301D9 /* ScreenCapture_toolbar_cross_normal.tiff */; };
 		D265E3861A820CFB00E301D9 /* ScreenCapture_toolbar_rect_effect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D265E3821A820CFB00E301D9 /* ScreenCapture_toolbar_rect_effect.tiff */; };
 		D265E3871A820CFB00E301D9 /* ScreenCapture_toolbar_rect_ineffect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D265E3831A820CFB00E301D9 /* ScreenCapture_toolbar_rect_ineffect.tiff */; };
@@ -70,6 +77,14 @@
 		32E071D21A7C6A5A0094D5DE /* SnipTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnipTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32E071D71A7C6A5A0094D5DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E071D81A7C6A5A0094D5DE /* SnipTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SnipTests.m; sourceTree = "<group>"; };
+		B30E2DBD205F617F008CD6A4 /* ScreenCapture_toolbar_text_ineffect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_text_ineffect.tiff; sourceTree = "<group>"; };
+		B30E2DBF205F6288008CD6A4 /* ScreenCapture_toolbar_text_effect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_text_effect.tiff; sourceTree = "<group>"; };
+		B30E2DC1205F8482008CD6A4 /* ScreenCapture_toolbar_pen_ineffect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_pen_ineffect.tiff; sourceTree = "<group>"; };
+		B30E2DC2205F8482008CD6A4 /* ScreenCapture_toolbar_pen_effect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_pen_effect.tiff; sourceTree = "<group>"; };
+		B30E2DC5205F9915008CD6A4 /* AutoHeightTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoHeightTextView.h; sourceTree = "<group>"; };
+		B30E2DC6205F9915008CD6A4 /* AutoHeightTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoHeightTextView.m; sourceTree = "<group>"; };
+		B3816564205FB0D000659960 /* ScreenCapture_toolbar_mosaic_ineffect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_mosaic_ineffect.tiff; sourceTree = "<group>"; };
+		B3816565205FB0D000659960 /* ScreenCapture_toolbar_mosaic_effect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_mosaic_effect.tiff; sourceTree = "<group>"; };
 		D265E3811A820CFB00E301D9 /* ScreenCapture_toolbar_cross_normal.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_cross_normal.tiff; sourceTree = "<group>"; };
 		D265E3821A820CFB00E301D9 /* ScreenCapture_toolbar_rect_effect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_rect_effect.tiff; sourceTree = "<group>"; };
 		D265E3831A820CFB00E301D9 /* ScreenCapture_toolbar_rect_ineffect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ScreenCapture_toolbar_rect_ineffect.tiff; sourceTree = "<group>"; };
@@ -139,6 +154,8 @@
 				D29A356F1A838D6700DD41BC /* MouseEventProtocol.h */,
 				D2AD02BB1A84A46A00426004 /* SimpleLabelView.h */,
 				D2AD02BC1A84A46A00426004 /* SimpleLabelView.m */,
+				B30E2DC5205F9915008CD6A4 /* AutoHeightTextView.h */,
+				B30E2DC6205F9915008CD6A4 /* AutoHeightTextView.m */,
 			);
 			name = Snip;
 			sourceTree = "<group>";
@@ -207,6 +224,12 @@
 		D265E3801A820CFB00E301D9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				B3816565205FB0D000659960 /* ScreenCapture_toolbar_mosaic_effect.tiff */,
+				B3816564205FB0D000659960 /* ScreenCapture_toolbar_mosaic_ineffect.tiff */,
+				B30E2DC2205F8482008CD6A4 /* ScreenCapture_toolbar_pen_effect.tiff */,
+				B30E2DC1205F8482008CD6A4 /* ScreenCapture_toolbar_pen_ineffect.tiff */,
+				B30E2DBF205F6288008CD6A4 /* ScreenCapture_toolbar_text_effect.tiff */,
+				B30E2DBD205F617F008CD6A4 /* ScreenCapture_toolbar_text_ineffect.tiff */,
 				D265E3811A820CFB00E301D9 /* ScreenCapture_toolbar_cross_normal.tiff */,
 				D265E3821A820CFB00E301D9 /* ScreenCapture_toolbar_rect_effect.tiff */,
 				D265E3831A820CFB00E301D9 /* ScreenCapture_toolbar_rect_ineffect.tiff */,
@@ -299,7 +322,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B30E2DC4205F8482008CD6A4 /* ScreenCapture_toolbar_pen_effect.tiff in Resources */,
+				B30E2DBE205F6180008CD6A4 /* ScreenCapture_toolbar_text_ineffect.tiff in Resources */,
+				B3816566205FB0D000659960 /* ScreenCapture_toolbar_mosaic_ineffect.tiff in Resources */,
 				32E071CA1A7C6A5A0094D5DE /* Images.xcassets in Resources */,
+				B3816567205FB0D000659960 /* ScreenCapture_toolbar_mosaic_effect.tiff in Resources */,
 				D265E3851A820CFB00E301D9 /* ScreenCapture_toolbar_cross_normal.tiff in Resources */,
 				D265E3861A820CFB00E301D9 /* ScreenCapture_toolbar_rect_effect.tiff in Resources */,
 				32E071CD1A7C6A5A0094D5DE /* MainMenu.xib in Resources */,
@@ -307,6 +334,8 @@
 				326AA0C21A7D1B4F00507232 /* SnipWindowController.xib in Resources */,
 				D265E3871A820CFB00E301D9 /* ScreenCapture_toolbar_rect_ineffect.tiff in Resources */,
 				D265E3881A820CFB00E301D9 /* ScreenCapture_toolbar_tick_normal.tiff in Resources */,
+				B30E2DC0205F6288008CD6A4 /* ScreenCapture_toolbar_text_effect.tiff in Resources */,
+				B30E2DC3205F8482008CD6A4 /* ScreenCapture_toolbar_pen_ineffect.tiff in Resources */,
 				E4863E6CA739266957BD4F58 /* ScreenCapture_toolbar_arrow_effect.tiff in Resources */,
 				E48BED02CE8B6CAAC23B336E /* ScreenCapture_toolbar_arrow_ineffect.tiff in Resources */,
 				E48FE02EBBBF20C1DAA4F13D /* ScreenCapture_toolbar_ellipse_effect.tiff in Resources */,
@@ -328,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B30E2DC7205F9915008CD6A4 /* AutoHeightTextView.m in Sources */,
 				D265E38E1A824A0800E301D9 /* DrawPathInfo.m in Sources */,
 				D2AD02BD1A84A46A00426004 /* SimpleLabelView.m in Sources */,
 				326AA0B71A7D116E00507232 /* DemoViewController.m in Sources */,

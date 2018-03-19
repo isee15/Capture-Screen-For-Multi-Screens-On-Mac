@@ -24,7 +24,9 @@ typedef NS_ENUM(int, DRAW_TYPE)
 {
     DRAW_TYPE_RECT,
     DRAW_TYPE_ELLIPSE,
-    DRAW_TYPE_ARROW
+    DRAW_TYPE_ARROW,
+    DRAW_TYPE_POINT,
+    DRAW_TYPE_TEXT
 };
 
 #define kNotifyCaptureEnd @"kNotifyCaptureEnd"

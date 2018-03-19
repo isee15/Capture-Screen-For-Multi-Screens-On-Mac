@@ -14,7 +14,9 @@ typedef NS_ENUM(NSInteger, ActionType)
     ActionOK,
     ActionShapeRect,
     ActionShapeEllipse,
-    ActionShapeArrow
+    ActionShapeArrow,
+    ActionEditPen,
+    ActionEditText
 };
 
 @interface ToolContainer : NSView
