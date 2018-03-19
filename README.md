@@ -14,6 +14,6 @@ Only QQ is powerful and perfect.
 And it's not open source.
 <br>
 
-#So, I try to do the capture screen sample to support dual monitors.
+# So, I try to do the capture screen sample to support dual monitors.
 <br>
 <img src="QQ20150228-1@2x.png"></img>
